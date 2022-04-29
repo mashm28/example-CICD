@@ -26,7 +26,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 	</http:request-config>
 	<flow name="server" doc:id="89887791-341f-45e2-a05c-2a9bf2d26187" >
 		<http:listener doc:name="Listener" doc:id="3c3274bf-1fdf-4617-9312-deaedb36b866" config-ref="HTTP_Listener_config" path="/server"/>
-		<set-payload value="Hello World!" doc:name="Set Payload" doc:id="890f0fd8-7505-4e87-81b9-716c141599a1" />
+		<set-payload value="Hi There!" doc:name="Set Payload" doc:id="890f0fd8-7505-4e87-81b9-716c141599a1" />
 	</flow>
 	<flow name="client" doc:id="32098a3d-1529-4e9d-b186-3f1727e754ec" >
 		<http:listener doc:name="Listener" doc:id="adbb8feb-dc99-4207-90c5-40eecd2c94c6" config-ref="HTTP_Listener_config1" path="/client"/>
