@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="e2b76e6a-9a71-470f-a138-e1276e7c2849" >
+		<http:listener-connection host="0.0.0.0" port="8082" protocol="HTTPS">
+			<tls:context >
+				<tls:trust-store path="servertruststore.jks" password="password" type="jks" />
+				<tls:key-store type="jks" path="serverkeystore.jks" alias="myserver" keyPassword="password" password="password" />
+			</tls:context>
+		</http:listener-connection>
+	</http:listener-config>
+	<http:listener-config name="HTTP_Listener_config1" doc:name="HTTP Listener config" doc:id="8e564df0-5c6a-468f-9bb1-c4608d89f29e" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="586427d0-4894-456d-aa58-e1ccc961ebbb" >
+		<http:request-connection protocol="HTTPS" host="localhost" port="8082" >
+			<tls:context >
+				<tls:trust-store path="clienttruststore.jks" password="password" type="jks" />
+				<tls:key-store type="jks" path="clientkeystore.jks" keyPassword="password" password="password" />
+			</tls:context>
+		</http:request-connection>
+	</http:request-config>
+	<flow name="server" doc:id="89887791-341f-45e2-a05c-2a9bf2d26187" >
+		<http:listener doc:name="Listener" doc:id="3c3274bf-1fdf-4617-9312-deaedb36b866" config-ref="HTTP_Listener_config" path="/server"/>
+		<set-payload value="Hello World!" doc:name="Set Payload" doc:id="890f0fd8-7505-4e87-81b9-716c141599a1" />
+	</flow>
+	<flow name="client" doc:id="32098a3d-1529-4e9d-b186-3f1727e754ec" >
+		<http:listener doc:name="Listener" doc:id="adbb8feb-dc99-4207-90c5-40eecd2c94c6" config-ref="HTTP_Listener_config1" path="/client"/>
+		<http:request method="GET" doc:name="Initiate Server" doc:id="5b156b39-14c1-4d23-9e50-7ccc59cd40cf" path="/server" config-ref="HTTP_Request_configuration"/>
+	</flow>
+</mule>
